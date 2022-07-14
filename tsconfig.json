@@ -11,13 +11,15 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "declaration": false,
+    "declaration": false,    
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "lib": [
       "es2020",
       "dom"

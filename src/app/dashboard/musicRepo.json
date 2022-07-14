@@ -1,0 +1,23 @@
+[
+	{
+		"isFavorite": true,
+		"songName": "Adele Send My Love To Your New Lover",
+		"artistName": "Adele Laurie Blue Adkins",
+		"genre": "Electro pop",
+		"photo": "https://www.infragistics.com/angular-demos-lob/assets/images/women/50.jpg"
+	},
+	{
+		"isFavorite": false,
+		"songName": "Ellie Goulding Love",
+		"artistName": "Ellie Goulding",
+		"genre": "Electro pop",
+		"photo": "https://www.infragistics.com/angular-demos-lob/assets/images/women/3.jpg"
+	},
+	{
+		"isFavorite": false,
+		"songName": "nightlife-michael-kobrin",
+		"artistName": "pop,flock,rock",
+		"genre": "Electro pop",
+		"photo": "https://www.infragistics.com/angular-demos-lob/assets/images/women/67.jpg"
+	}
+] 
