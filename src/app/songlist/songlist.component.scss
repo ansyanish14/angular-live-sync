@@ -1,0 +1,28 @@
+.songView{
+background-color: rgb(86, 62, 154);
+opacity: 0.7;
+
+margin-left: 25rem;
+margin-right: 25rem;
+display:grid;
+align-items: center;
+}
+/*.container{
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}*/
+.songHead{
+    
+    align-content: center;
+    font:100,bold,italic;
+    font-size: large;
+    color: rgb(54, 130, 171);
+    padding-left: 200px;
+}
+.Album{
+font-size: medium;
+padding: left 200px;;
+color: blue;
+}

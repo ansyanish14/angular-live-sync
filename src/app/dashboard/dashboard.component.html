@@ -19,7 +19,13 @@
             <igx-avatar igxListThumbnail [src]="song.photo" [roundShape]="true"></igx-avatar>
             <span igxListLineTitle>{{ song.songName }}</span>
             <span igxListLineSubTitle>{{ song.artistName }}</span>
+            <igx-icon class="add">+</igx-icon>
             <igx-icon igxListAction [style.color]="song.isFavorite ? 'orange' : 'lightgray'" (click)="toggleFavorite(song)">star</igx-icon>
         </igx-list-item>
     </igx-list>
 </div>
+
+
+
+
+
