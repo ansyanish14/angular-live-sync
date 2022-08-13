@@ -29,10 +29,13 @@
     "hammerjs": "^2.0.8",
     "igniteui-angular": "^14.0.6",
     "jszip": "^3.10.0",
+    "mdb-ui-kit": "^4.4.0",
     "minireset.css": "~0.0.4",
     "moment": "^2.29.4",
+    "ngx-mat-select-search": "^4.2.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "volume": "^0.0.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

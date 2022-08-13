@@ -16,11 +16,46 @@
     <igx-list [displayDensity]="$any('density')">
         <igx-list-item [isHeader]="true">Songs</igx-list-item>
         <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" #item *ngFor="let song of songs | igxFilter: filterContacts;">
-            <igx-avatar igxListThumbnail [src]="song.photo" [roundShape]="true"></igx-avatar>
+            <igx-avatar igxListThumbnail [src]="song.photo" [roundShape]="true" (click)="redirectPlayer()"></igx-avatar>
             <span igxListLineTitle>{{ song.songName }}</span>
             <span igxListLineSubTitle>{{ song.artistName }}</span>
-            <igx-icon class="add">+</igx-icon>
-            <igx-icon igxListAction [style.color]="song.isFavorite ? 'orange' : 'lightgray'" (click)="toggleFavorite(song)">star</igx-icon>
+            <igx-icon class="add"></igx-icon>
+            <mat-menu #appMenu>
+                <button mat-menu-item>
+                   <mat-icon>share</mat-icon>
+                  <span> Share</span>
+                </button>
+                <button mat-menu-item [matMenuTriggerFor]=" AddPlaylist ">
+                  
+                  <mat-icon>queue</mat-icon> 
+                  <span> Add to Playlist</span>
+                  
+               </button>
+                <button mat-menu-item>
+                  <mat-icon>cloud_download</mat-icon>
+                   <span> Download</span>
+               </button>
+               <button mat-menu-item>
+                   <mat-icon>cancel</mat-icon>
+                   <span> cancel</span>
+               </button>
+           </mat-menu>
+           
+               <button mat-icon-button [matMenuTriggerFor]="appMenu" >
+                  
+                   <mat-icon>more_vert</mat-icon>
+                 </button>
+                 <mat-menu #AddPlaylist="matMenu">
+                    <button mat-menu-item class="Playlist_add">
+                        <i class="fa fa-eye" ></i>
+                        <mat-icon>playlist_add</mat-icon>
+                        <span> New Playlist</span></button>
+                    <button mat-menu-item >
+                        <mat-icon >playlist_add_check</mat-icon>
+                        <span>Existing Playlist</span></button>
+                </mat-menu>
+                 
+            <igx-icon igxListAction [style.color]="song.isFavorite ? 'orange' : 'lightgray'" (click)="toggleFavorite(song)">favorite</igx-icon>
         </igx-list-item>
     </igx-list>
 </div>

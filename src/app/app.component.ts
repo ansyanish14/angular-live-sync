@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CognitoService } from './cognito.service';
+import { CognitoService } from './services/cognito.service';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.cognitoService.isAuthenticated()
-    .then((success: boolean) => {
+    this.cognitoService.isAuthenticated().then((success: boolean) => {
       this.isAuthenticated = success;
     });
   }

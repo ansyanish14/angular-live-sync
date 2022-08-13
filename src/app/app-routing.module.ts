@@ -8,12 +8,17 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SonglistComponent } from './songlist/songlist.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { PlayerComponent } from './player/player.component';
+import { PlaylistComponent } from './playlist/playlist.component';
+import { SyncuserComponent } from './syncuser/syncuser.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+  },
+  { path:'syncuser/:playlistId',
+    component:SyncuserComponent,
   },
   {
     path:'songlist',
@@ -38,6 +43,10 @@ const routes: Routes = [
   {
     path:'player',
     component: PlayerComponent,
+  },
+  {
+    path:'playlist',
+    component: PlaylistComponent,
   },  
   {
     path: '**',

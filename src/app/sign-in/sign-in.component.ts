@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IUser, CognitoService } from '../cognito.service';
+import { IUser, CognitoService } from '../services/cognito.service';
 
 @Component({
   selector: 'app-sign-in',

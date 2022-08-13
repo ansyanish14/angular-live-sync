@@ -6,4 +6,6 @@ export interface StreamState {
     currentTime: number | undefined;
     canplay: boolean;
     error: boolean;
+    volumeRange: number | undefined;
+    currentRange: number | undefined;
 }

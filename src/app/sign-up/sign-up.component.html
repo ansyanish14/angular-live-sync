@@ -4,7 +4,19 @@
         <div class="card-body" *ngIf="!isConfirm">
           <div class="row">
             <div class="col mb-2">
-              <label for="email" class="form-label">Email:</label>
+              <label for="email" class="form-label">First Name:</label>
+              <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="user.firstName" class="form-control form-control-sm">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label for="email" class="form-label">Last Name:</label>
+              <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="user.lastName" class="form-control form-control-sm">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label for="email" class="form-label">Username:</label>
               <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control form-control-sm">
             </div>
           </div>
@@ -37,7 +49,7 @@
           </div>
           <div class="row">
             <div class="col d-grid">
-              <button type="button" (click)="confirmSignUp()" class="btn btn-sm btn-success" [disabled]="loading">
+              <button type="button" (click)="confirmSignUp()" class="btn btn-sm btn-success" [disabled]="loading" >
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
                 Confirm
               </button>

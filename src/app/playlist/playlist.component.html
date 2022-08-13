@@ -1,0 +1,49 @@
+<div class="density-chooser">
+    <igx-buttongroup [values]="displayDensities" (selected)="selectDensity($event)"></igx-buttongroup>
+</div>
+
+<igx-input-group type="search" class="search">
+    <igx-prefix>
+        <igx-icon>search playlist</igx-icon>
+    </igx-prefix>
+    <input #search igxInput placeholder="Search Playlist" [(ngModel)]="searchContact">
+    <igx-suffix *ngIf="search.value.length > 0" (click)="searchContact = ''">
+    </igx-suffix>
+</igx-input-group>
+
+<div class="list-sample">
+    <igx-list [displayDensity]="$any('density')">
+        <igx-list-item [isHeader]="true">Play List</igx-list-item>
+        <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" #item *ngFor="let pl of playlist | igxFilter: filterContacts;">
+            
+            <!--<igx-avatar igxListThumbnail [src]="pl.icon" [roundShape]="true" (click)="redirectPlayer()"></igx-avatar>-->
+            <igx-avatar igxListThumbnail [roundShape]="true" (click)="redirectPlayer(pl.playlistId)">
+                <mat-icon>queue_music</mat-icon>
+            </igx-avatar>
+            <span igxListLineTitle>{{ pl.playlistName }}</span>
+            <igx-icon class="add"></igx-icon>
+            <mat-menu #appMenu>
+                <button mat-menu-item>
+                   <mat-icon>share</mat-icon>
+                  <span> Share</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>stream</mat-icon>
+                    <span> Live Sync</span>
+                </button>
+                <button mat-menu-item routerLink="/syncuser/{{ pl.playlistId }}">
+                    <mat-icon>group_add</mat-icon>
+                    <span> Sync User</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                   <span> Delete</span>
+                </button>
+           </mat-menu>           
+            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <igx-icon igxListAction [style.color]="pl.isFavorite ? 'orange' : 'lightgray'" (click)="toggleFavorite(pl)">favorite</igx-icon>
+        </igx-list-item>
+    </igx-list>
+</div>

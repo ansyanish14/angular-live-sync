@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import songlist from './musicRepo.json';
+import songlist from "../../assets/music_repo.json";
 import { IgxFilterOptions } from 'igniteui-angular';
-
-interface Song {
-  isFavorite: boolean;
-  songName: String;  
-  artistName: String;  
-  genre: String;
-  photo: String;
-}
+import { Router } from '@angular/router';
+import { ISong, ClientService } from "../services/client.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -21,21 +15,35 @@ export class DashboardComponent implements OnInit {
 
   public searchContact!: string;
 
-  songs: Song[] = songlist;
+  //songs: any;
+  songs: Array<ISong> = [];
 
   public density = 'song';
   public displayDensities: any;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private client: ClientService
+  ) {}
 
   public ngOnInit() {
     this.displayDensities = [
         { label: 'Songs', selected: this.density === 'song', togglable: true },
         { label: 'Play List', selected: this.density === 'playList', togglable: true }
     ];
+
+    this.client.getSongsFromRepo().subscribe(data => {
+      this.songs = data;
+    });
   }
 
   public selectDensity(event: any) {
+    console.log(event.index);
+    if(event.index == 0) {
+      this.router.navigateByUrl("dashboard");
+    } else {
+      this.router.navigateByUrl("playlist");
+    }
     this.density = this.displayDensities[event.index].label;
   }
 
@@ -49,5 +57,12 @@ export class DashboardComponent implements OnInit {
     fo.inputValue = this.searchContact;
     return fo;
   }
-  
+
+  public redirectPlayer(){
+    this.router.navigateByUrl("player");
+  }
+
+  public redirectPlaylist(){
+    this.router.navigateByUrl("playlist");
+  }
 }

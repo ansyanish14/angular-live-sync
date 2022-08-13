@@ -22,7 +22,13 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+import { HttpClientModule } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +38,9 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SonglistComponent } from './songlist/songlist.component';
 import { PlayerComponent } from './player/player.component';
+import { PlaylistComponent } from './playlist/playlist.component';
+import { SyncuserComponent } from './syncuser/syncuser.component';
+
 
 const modules = [
   AppRoutingModule,
@@ -54,7 +63,21 @@ const modules = [
   MatBottomSheetModule,
   MatIconModule,
   MatSliderModule,
-  MatListModule
+  MatListModule,
+  MatMenuModule,
+  MatTabsModule,
+  HttpClientModule,
+ MatFormFieldModule,
+ MatCheckboxModule,
+ MatTooltipModule,
+
+
+ 
+
+ 
+
+
+  
 ];
 
 @NgModule({
@@ -65,7 +88,10 @@ const modules = [
     SignUpComponent,
     DashboardComponent,
     SonglistComponent,
-    PlayerComponent
+    PlayerComponent,
+    PlaylistComponent,
+    SyncuserComponent,
+    
   ],
   imports: modules,
   exports: modules,

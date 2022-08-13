@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IUser, CognitoService } from '../cognito.service';
+import { IUser, CognitoService } from '../services/cognito.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit {
     .then((user: any) => {
       this.user = user.attributes;
     });
+    console.log("user profile name ---->" + this.user.email);
   }
 
   public update(): void {

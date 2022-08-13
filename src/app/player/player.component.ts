@@ -1,34 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, PartialObserver, Observer } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { AudioService } from "../services/audio.service";
-import { CloudService } from "../services/cloud.service";
 import { StreamState } from "../interfaces/stream-state";
+import { ClientService, ISong} from '../services/client.service';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent {
+export class PlayerComponent implements OnInit {
 
-  files: Array<any> = [];
+  files: Array<ISong> = [];
   state!: StreamState;
   currentFile: any = {};
 
+  public ngOnInit() { 
+    this.client.getSongsFromRepo().subscribe(data => {
+      this.files = data;
+      this.openFile(data[0], 0);
+    });
+  }
+
   constructor(
     public audioService: AudioService,
-    public cloudService: CloudService
-  ) {
-    // get media files
-    cloudService.getFiles().subscribe(files => {
-      this.files = files;
-    });
+    private client: ClientService
+  ) {   
 
     // listen to stream state
     this.audioService.getState().subscribe(state => {
       this.state = state;
     });
-  }
+  }  
 
   openFile(file: any, index: any) {
     this.currentFile = { index, file };
@@ -76,6 +78,11 @@ export class PlayerComponent {
 
   onSliderChangeEnd(change: any) {
     this.audioService.seekTo(change.value);
+  }
+
+  onSliderVoloum(change: any) {
+    console.log("volum ----> " + change);
+    //this.audioService.volumeTo(change);
   }
 
 }

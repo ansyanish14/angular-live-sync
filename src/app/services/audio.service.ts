@@ -17,6 +17,8 @@ export class AudioService {
     currentTime: undefined,
     canplay: false,
     error: false,
+    volumeRange: undefined,
+    currentRange: undefined
   };
 
   playStream(url: any) {
@@ -31,7 +33,9 @@ export class AudioService {
       duration: undefined,
       currentTime: undefined,
       canplay: false,
-      error: false
+      error: false,
+      volumeRange: undefined,
+      currentRange: undefined
     };
   }
 
@@ -55,6 +59,7 @@ export class AudioService {
       this.audioObj.src = url;
       this.audioObj.load();
       this.audioObj.play();
+      this.audioObj.volume
   
       const handler = (event: Event) => {
         this.updateStateEvents(event);
@@ -140,5 +145,9 @@ export class AudioService {
 
   getState(): Observable<StreamState> {
     return this.stateChange.asObservable();
+  }
+
+  volumeTo(seconds: number) {
+    this.audioObj.volume = 0.0;
   }
 }
