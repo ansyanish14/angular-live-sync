@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ClientService, IListUser } from "../services/client.service";
+import { ClientService } from "../services/client.service";
+import { ListUser } from '../interfaces/list-user';
 
 @Component({
   selector: 'app-syncuser',
@@ -9,8 +10,8 @@ import { ClientService, IListUser } from "../services/client.service";
 })
 export class SyncuserComponent implements OnInit {
 
-  userList: Array<IListUser> = [];
-  userListToSave: Array<IListUser> = [];
+  userList: Array<ListUser> = [];
+  userListToSave: Array<ListUser> = [];
   playlistId: any = 0;
 
   constructor(private router: Router,
@@ -30,7 +31,7 @@ export class SyncuserComponent implements OnInit {
     });
   }
 
-  onChangeRole(user: IListUser, isChecked: any){
+  onChangeRole(user: ListUser, isChecked: any){
     console.log(user);
     console.log(isChecked.checked);
 

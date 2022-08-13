@@ -1,0 +1,54 @@
+<div class="container">
+    <mat-toolbar color="primary" class="main-toolbar">
+        <span>Live Sync</span>
+    </mat-toolbar>
+    <div class="content">
+        <div class="logo">
+            <mat-icon>music_note</mat-icon>
+            <div>Audio Player</div>
+            <div class="media-footer">
+                <mat-toolbar color="primary">
+                    <mat-toolbar-row>
+                        {{ livesync.state?.readableCurrentTime }}
+                        <mat-slider class="time-slider" min="0" 
+                            [max]="livesync.state?.duration" step="1" 
+                            [value]="livesync.state?.currentTime" 
+                            (input)="onSliderChange($event)" 
+                            [disabled]="livesync.state?.error || 
+                            livesync.currentFile.index === undefined">
+                        </mat-slider>
+                        {{ livesync.state?.readableDuration }}
+                    </mat-toolbar-row>
+                    <mat-toolbar-row class="media-action-bar">
+                        <button mat-button [disabled]="isFirstPlaying()" (click)="previous()">
+                            <mat-icon mat-list-icon>skip_previous</mat-icon>
+                        </button>
+                        <button mat-button (click)="play()" [disabled]="livesync.state?.error" 
+                            *ngIf="!livesync.state?.playing">
+                            <mat-icon mat-list-icon>play_circle_filled</mat-icon>
+                        </button>
+                        <button mat-button (click)="pause()" *ngIf="livesync.state?.playing">
+                            <mat-icon mat-list-icon>pause</mat-icon>
+                        </button>
+                        <button  mat-button [disabled]="isLastPlaying()" (click)="next()">
+                            <mat-icon mat-list-icon>skip_next</mat-icon>
+                        </button>                  
+                        <mat-icon>volume_up</mat-icon>
+                        <!--<input type="range" min="0" max="1" step="0.2" value="0.5" (input)="onSliderVoloum($event)">
+                        <mat-slider class="time-slider" min="0" [max]="state?.volumeRange" step="0.1" [value]="state?.currentRange" (input)="onSliderVoloum($event)" [disabled]="state?.error || currentFile.index === undefined"></mat-slider>-->
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+        </div>
+        <mat-list color="primary">
+            <h3 mat-subheader>Songs</h3>
+            <mat-list-item *ngFor="let file of livesync.playlistSongs; let i = index" (click)="openFile(i)">
+                <mat-icon color="primary" mat-list-icon>music_note</mat-icon>
+                <h4 mat-line>{{ file.songName }}</h4>
+                <h6 mat-line>by {{ file.artistName }}</h6>
+                <mat-icon color="primary" *ngIf="livesync.currentFile.index === i && !livesync.state?.error">queue_music</mat-icon>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

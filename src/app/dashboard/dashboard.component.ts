@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import songlist from "../../assets/music_repo.json";
 import { IgxFilterOptions } from 'igniteui-angular';
 import { Router } from '@angular/router';
-import { ISong, ClientService } from "../services/client.service";
+import { ClientService } from "../services/client.service";
+import { Song } from '../interfaces/song';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   public searchContact!: string;
 
   //songs: any;
-  songs: Array<ISong> = [];
+  songs: Array<Song> = [];
 
   public density = 'song';
   public displayDensities: any;
@@ -38,7 +38,6 @@ export class DashboardComponent implements OnInit {
   }
 
   public selectDensity(event: any) {
-    console.log(event.index);
     if(event.index == 0) {
       this.router.navigateByUrl("dashboard");
     } else {

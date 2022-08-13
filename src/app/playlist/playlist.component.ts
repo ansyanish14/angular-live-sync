@@ -3,7 +3,8 @@ import playlists from './playlist.json';
 import { IgxFilterOptions } from 'igniteui-angular';
 import { Router } from '@angular/router';
 import { CognitoService, IUser } from '../services/cognito.service';
-import { ClientService, IPlaylist } from '../services/client.service';
+import { ClientService } from '../services/client.service';
+import { PlayList } from '../interfaces/play-list';
 
 @Component({
   selector: 'app-playlist',
@@ -16,7 +17,7 @@ export class PlaylistComponent implements OnInit {
   user: IUser;
 
   //play: Playlist[] = playlists;
-  playlist: Array<IPlaylist> = [];
+  playlist: Array<PlayList> = [];
 
   public density = 'playList';
   public displayDensities: any;
@@ -34,7 +35,7 @@ export class PlaylistComponent implements OnInit {
     this.cognitoService.isAuthenticated().then((success: boolean) => {
       this.isAuthenticated = success;
       if(success){
-        console.log("----->success");
+        console.log();
       } else {
         this.router.navigate(['/signIn']);
       }        
@@ -42,9 +43,7 @@ export class PlaylistComponent implements OnInit {
 
     this.cognitoService.getUser().then((user: any) => {
       this.user = user.attributes;
-      console.log("user details --->" +this.user.email);
       this.client.getPlaylistByUser(this.user.email).subscribe(data => {
-        console.log("play list --->" +data);
         this.playlist = data;
       });
     });    

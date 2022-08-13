@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AudioService } from "../services/audio.service";
 import { StreamState } from "../interfaces/stream-state";
-import { ClientService, ISong} from '../services/client.service';
+import { ClientService } from '../services/client.service';
+import { Song } from '../interfaces/song';
 
 @Component({
   selector: 'app-player',
@@ -10,9 +11,18 @@ import { ClientService, ISong} from '../services/client.service';
 })
 export class PlayerComponent implements OnInit {
 
-  files: Array<ISong> = [];
+  files: Array<Song> = [];
   state!: StreamState;
   currentFile: any = {};
+
+  constructor(
+    public audioService: AudioService,
+    private client: ClientService
+  ) {
+    this.audioService.getState().subscribe(state => {
+      this.state = state;
+    });
+  }
 
   public ngOnInit() { 
     this.client.getSongsFromRepo().subscribe(data => {
@@ -20,17 +30,6 @@ export class PlayerComponent implements OnInit {
       this.openFile(data[0], 0);
     });
   }
-
-  constructor(
-    public audioService: AudioService,
-    private client: ClientService
-  ) {   
-
-    // listen to stream state
-    this.audioService.getState().subscribe(state => {
-      this.state = state;
-    });
-  }  
 
   openFile(file: any, index: any) {
     this.currentFile = { index, file };

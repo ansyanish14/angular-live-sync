@@ -40,6 +40,7 @@ import { SonglistComponent } from './songlist/songlist.component';
 import { PlayerComponent } from './player/player.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SyncuserComponent } from './syncuser/syncuser.component';
+import { LivesyncComponent } from './livesync/livesync.component';
 
 
 const modules = [
@@ -91,6 +92,7 @@ const modules = [
     PlayerComponent,
     PlaylistComponent,
     SyncuserComponent,
+    LivesyncComponent,
     
   ],
   imports: modules,

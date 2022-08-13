@@ -10,6 +10,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { PlayerComponent } from './player/player.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SyncuserComponent } from './syncuser/syncuser.component';
+import { LivesyncComponent } from './livesync/livesync.component'
 
 const routes: Routes = [
   {
@@ -18,7 +19,10 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   { path:'syncuser/:playlistId',
-    component:SyncuserComponent,
+    component: SyncuserComponent,
+  },
+  { path:'livesync/:playlistId',
+    component: LivesyncComponent,
   },
   {
     path:'songlist',
