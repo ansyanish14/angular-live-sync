@@ -1,0 +1,9 @@
+<div mat-dialog-content>
+  <label for="playlistName" class="form-label">{{data.message}}</label>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.livesyncId" cdkFocusInitial 
+    class="playlist-btn btn btn-sm btn-success" *ngIf="data.isJoin">Join</button>  
+  <button mat-button (click)="onNoClick()"
+    class="playlist-btn btn btn-sm btn-success">Cancel</button>
+</div>

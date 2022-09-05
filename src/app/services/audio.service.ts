@@ -18,7 +18,8 @@ export class AudioService {
     canplay: false,
     error: false,
     volumeRange: undefined,
-    currentRange: undefined
+    currentRange: undefined,
+    isEnded: false
   };
 
   playStream(url: any) {
@@ -35,7 +36,8 @@ export class AudioService {
       canplay: false,
       error: false,
       volumeRange: undefined,
-      currentRange: undefined
+      currentRange: undefined,
+      isEnded: false
     };
   }
 
@@ -55,7 +57,6 @@ export class AudioService {
 
   private streamObservable(url: any) {
     return new Observable(observer => {
-      // Play audio
       this.audioObj.src = url;
       this.audioObj.load();
       this.audioObj.play();
@@ -68,7 +69,7 @@ export class AudioService {
   
       this.addEvents(this.audioObj, this.audioEvents, handler);
       return () => {
-        // Stop Playing
+        // Stop Playing        
         this.audioObj.pause();
         this.audioObj.currentTime = 0;
         // remove event listeners
@@ -122,22 +123,25 @@ export class AudioService {
         this.state.duration = this.audioObj.duration;
         this.state.readableDuration = this.formatTime(this.state.duration);
         this.state.canplay = true;
+        this.state.isEnded = false;
         break;
       case "playing":
         this.state.playing = true;
+        this.state.isEnded = false;
         break;
       case "pause":
         this.state.playing = false;
+        this.state.isEnded = false;
         break;
       case "timeupdate":
+        this.state.isEnded = false;
         this.state.currentTime = this.audioObj.currentTime;
-        this.state.readableCurrentTime = this.formatTime(
-          this.state.currentTime
-        );
+        this.state.readableCurrentTime = this.formatTime(this.state.currentTime);
         break;
       case "error":
         this.resetState();
         this.state.error = true;
+        this.state.isEnded = false;
         break;
     }
     this.stateChange.next(this.state);
@@ -149,5 +153,9 @@ export class AudioService {
 
   volumeTo(seconds: number) {
     this.audioObj.volume = 0.0;
+  }
+
+  getCurrentSeekTime() {
+    return this.state.readableCurrentTime;
   }
 }

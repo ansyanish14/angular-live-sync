@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { LivesyncReqVo } from '../models/livesync-req-vo';
-import { LivesyncResDto } from '../models/livesync-res-dto';
+import { Router } from '@angular/router';
 import { AudioService } from "../services/audio.service";
 import { StreamState } from "../interfaces/stream-state";
 import { LivesyncService } from '../services/livesync.service';
+import { LivesyncList } from '../interfaces/livesync-list';
+import { IUser } from '../services/cognito.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,50 +17,75 @@ export class WebSocketService {
   webSocket!: WebSocket;
   state!: StreamState;
 
+
   constructor(public audioService: AudioService,
+    private router: Router,
     private livesyncService: LivesyncService) {
     this.audioService.getState().subscribe(state => {
       this.state = state;
     });
   }
 
-  public connectWebSocket(liveSync: any){
-    this.webSocket = new WebSocket(this.socketConnectUrl + liveSync);
+  public connectWebSocket(livesync: LivesyncList, user: IUser){
+
+    this.webSocket = new WebSocket(this.socketConnectUrl + livesync.livesyncId);
 
     this.webSocket.onopen = (event) => {
-      console.log('Open: ', event);
+      if(user.username != livesync.hostUser) {
+        this.sendMessage(new LivesyncReqVo(livesync.livesyncId, "request", 0, 0));
+      }
     };
 
     this.webSocket.onmessage = (event) => {
       const responseMes = JSON.parse(event.data);
-      console.log('read message: ', responseMes);
 
-      if(responseMes['action'] == 'pause'){
+      if(responseMes['action'] == 'request') {
+        if(user.username == livesync.hostUser) {
+          this.sendMessage(this.livesyncService.getCurrentStatus(livesync.livesyncId));
+        }
+      }
+      if(responseMes['action'] == 'response') {
+        if(user.username != livesync.hostUser) {
+          const index = responseMes['index'];
+          const value = responseMes['value'];
+          this.livesyncService.openSongFile(index);
+          this.livesyncService.onSliderChange(value);
+        }        
+      }
+      if(responseMes['action'] == 'pause') {
         this.livesyncService.pause();
       }
-      if(responseMes['action'] == 'play'){
+      if(responseMes['action'] == 'play') {
         this.livesyncService.play();
       }
-      if(responseMes['action'] == 'next'){
+      if(responseMes['action'] == 'next') {
         this.livesyncService.next();
       }
-      if(responseMes['action'] == 'previous'){
+      if(responseMes['action'] == 'previous') {
         this.livesyncService.previous();
       }
-      if(responseMes['action'] == 'select'){
-        const index = responseMes['value'];
-        console.log('-->'+index);
+      if(responseMes['action'] == 'select') {
+        const index = responseMes['index'];
         this.livesyncService.openSongFile(index);
+      }
+      if(responseMes['action'] == 'seekTo') {
+        const value = responseMes['value'];
+        this.livesyncService.onSliderChange(value);
+      }
+      if(responseMes['action'] == 'close') {
+        this.disconnectWebSocket();
       }
     };
 
     this.webSocket.onclose = (event) => {
-      console.log('Close: ', event);
+      if(event.type == "close") {
+        this.livesyncService.pause();
+        this.router.navigate(['/livesyncList']);
+      }
     };
   }
 
   public sendMessage(livesyncVo: LivesyncReqVo){
-    console.log('send message: ', JSON.stringify(livesyncVo));
     this.webSocket.send(JSON.stringify(livesyncVo));
   }
 

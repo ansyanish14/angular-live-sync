@@ -1,0 +1,39 @@
+<igx-input-group type="search" class="search">
+    <igx-prefix>
+        <igx-icon>search</igx-icon>
+    </igx-prefix>
+    <input #search igxInput placeholder="Search Contacts" [(ngModel)]="searchContact">
+    <igx-suffix *ngIf="search.value.length > 0" (click)="searchContact = null">
+        <igx-icon>clear</igx-icon>
+    </igx-suffix>
+</igx-input-group>
+
+<div class="list-sample">
+    <igx-list >
+        <igx-list-item [isHeader]="true">Songs</igx-list-item>
+        <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" #item *ngFor="let song of songs | igxFilter: filterContacts;">
+            <igx-avatar igxListThumbnail [src]="song.photo" [roundShape]="true" (click)="redirectPlayer()"></igx-avatar>
+            <span igxListLineTitle>{{ song.songName }}</span>
+            <span igxListLineSubTitle>{{ song.artistName }}</span>
+            <igx-icon class="add"></igx-icon>
+            <mat-menu #appMenu>
+                <button mat-menu-item>
+                   <mat-icon>share</mat-icon>
+                  <span> Share</span>
+                </button>
+                <button mat-menu-item>                  
+                  <mat-icon>playlist_add_check</mat-icon> 
+                  <span (click)="openDialog(song.id)"> Add to Playlist</span>
+               </button>
+               <button mat-menu-item>
+                   <mat-icon>cancel</mat-icon>
+                   <span> cancel</span>
+               </button>
+            </mat-menu>           
+            <button mat-icon-button [matMenuTriggerFor]="appMenu" >                  
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <igx-icon igxListAction [style.color]="song.isFavorite ? 'orange' : 'lightgray'" (click)="toggleFavorite(song)">favorite</igx-icon>
+        </igx-list-item>
+    </igx-list>
+</div>

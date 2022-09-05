@@ -3,15 +3,19 @@ import { BehaviorSubject } from 'rxjs';
 import Amplify, { Auth } from 'aws-amplify';
 
 import { environment } from '../../environments/environment';
+import { ListUser } from '../interfaces/list-user';
 
 export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  confirmPassword: string;
   showPassword: boolean;
   code: string;
   name: string;
+  given_name: string;
+  family_name: string
   username:string;
 }
 
@@ -19,6 +23,8 @@ export interface IUser {
   providedIn: 'root',
 })
 export class CognitoService {
+
+  isAutheticate: boolean;
   
   private authenticationSubject: BehaviorSubject<any>;
   
@@ -26,7 +32,7 @@ export class CognitoService {
     Amplify.configure({
       Auth: environment.cognito,
     });
-
+    this.isAutheticate = false;
     this.authenticationSubject = new BehaviorSubject<boolean>(false);
   }
 
@@ -43,6 +49,14 @@ export class CognitoService {
 
   public confirmSignUp(user: IUser): Promise<any> {
     return Auth.confirmSignUp(user.email, user.code);
+  }
+
+  public forgotPassword(user: IUser): Promise<any> {
+    return Auth.forgotPassword(user.email);
+  }
+
+  public confirmForgotPassword(user: IUser): Promise<any> {
+    return Auth.forgotPasswordSubmit(user.email, user.code, user.password);
   }
 
   public signIn(user: IUser): Promise<any> {
@@ -63,20 +77,20 @@ export class CognitoService {
     } else {
       return this.getUser().then((user: any) => {
         if (user) {
+          this.isAutheticate = true;
           return true;
         } else {
+          this.isAutheticate = false;
           return false;
         }
       }).catch(() => {
+        this.isAutheticate = false;
         return false;
       });
     }
   }
 
   public getUser(): Promise<any> {
-    //Auth.currentAuthenticatedUser().then(user => {
-      //console.log('user = ' + JSON.stringify(user));
-    //});
     return Auth.currentUserInfo();
   }
 

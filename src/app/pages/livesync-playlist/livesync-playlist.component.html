@@ -1,0 +1,38 @@
+
+<div class="list-sample">
+    <igx-list [displayDensity]="$any('density')">
+        <igx-list-item [isHeader]="true">Live Sync List</igx-list-item>
+        <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" #item *ngFor="let pl of livesync | igxFilter: filterContacts;">
+            
+            <!--<igx-avatar igxListThumbnail [src]="pl.icon" [roundShape]="true" (click)="redirectPlayer()"></igx-avatar>-->
+            <igx-avatar igxListThumbnail [roundShape]="true" >
+                <mat-icon>queue_music</mat-icon>
+            </igx-avatar>
+            <span igxListLineTitle>{{ pl.playlistName }}</span>
+            <button class="mat-raise" mat-raised-button color="primary" *ngIf="!(pl.hostUser == pl.collaborativeUser)"
+                (click)="joinLiveSync(pl.playlistId, pl.livesyncId)">
+                <mat-icon>stream</mat-icon>
+                Join 
+            </button>
+            <button class="mat-raise" mat-raised-button color="primary" *ngIf="pl.hostUser == pl.collaborativeUser" 
+                routerLink="/livesync/{{ pl.livesyncId }}">
+                <mat-icon>stream</mat-icon>
+                Start
+            </button>
+            <mat-menu #appMenu>                
+                <button mat-menu-item *ngIf="pl.hostUser == pl.collaborativeUser" 
+                    (click)="addUsers(pl.livesyncId, pl.playlistName)">
+                    <mat-icon>group_add</mat-icon>
+                    <span>Add User</span>
+                </button>
+                <button mat-menu-item (click)="deleteLivesync(pl.livesyncId)">
+                   <mat-icon>delete</mat-icon>
+                   <span>remove</span>
+                </button>
+           </mat-menu>           
+            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </igx-list-item>
+    </igx-list>
+</div>

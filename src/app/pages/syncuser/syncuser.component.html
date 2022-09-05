@@ -1,0 +1,32 @@
+<div>
+    <igx-input-group type="search" class="search">
+        <igx-prefix>
+            <igx-icon>search song</igx-icon>
+        </igx-prefix>
+        <input #search igxInput placeholder="Search Songs" >
+        <igx-suffix *ngIf="search.value.length > 0" >
+            <igx-icon>clear</igx-icon>
+        </igx-suffix>
+    </igx-input-group>
+    <button mat-raised-button color="primary" class="add" 
+        (click)="saveSyncUsers()">+ Add User</button>
+</div>
+
+<div class="list-sample">
+    <igx-list>
+        <igx-list-item [isHeader]="true">Users</igx-list-item>
+        <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" 
+            #item *ngFor="let us of userList">
+            <input class="form-check-input" name="{{us.userName}}" 
+                type="checkbox" id="{{us.userName}}" [checked]="us.isChecked" 
+                    [(ngModel)]="us.isChecked"
+                    (change)="onChangeRole(us, $event.target)">
+            
+            <igx-avatar igxListThumbnail [roundShape]="true">
+                <mat-icon>person</mat-icon>
+            </igx-avatar>
+            <span igxListLineTitle>{{ us.lastName }}, {{ us.firstName }} </span>
+            <igx-icon class="add"></igx-icon>
+        </igx-list-item>
+    </igx-list>
+</div>

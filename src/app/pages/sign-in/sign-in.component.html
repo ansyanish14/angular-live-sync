@@ -1,0 +1,63 @@
+<div class="row justify-content-center my-5">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup] = "formSignin" >
+            <div class="row">
+              <div class="col mb-2">
+                <label for="email" class="form-label" >Email Address: </label>
+                <input id="email" formControlName="email" type="email" class="form-control form-control-sm" >
+                <div *ngIf="formSignin.controls['email'].invalid && (formSignin.controls['email'].dirty || formSignin.controls['email'].touched)" >
+                  <label class="text-danger" *ngIf="formSignin.controls['email'].hasError('required')">
+                    Email Address is Required!
+                  </label>
+                  <label class="text-danger" *ngIf="formSignin.controls['email'].hasError('email')">
+                    Enter a valid email address!
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mb-2">
+                <label for="password" >Password:</label>
+                <div class="input-group input-group-sm">
+                  <input id="password" formControlName="password" [type]="user.showPassword ? 'text' : 'password'" class="form-control form-control-sm">
+                  <button type="button" class="btn btn-outline-secondary" (click)="user.showPassword = !user.showPassword">
+                    <i class="bi" [ngClass]="{'bi-eye-fill': !user.showPassword, 'bi-eye-slash-fill': user.showPassword}"></i>
+                  </button>
+                </div>
+                <div *ngIf="formSignin.controls['password'].invalid && (formSignin.controls['password'].dirty || formSignin.controls['password'].touched)" >
+                  <label class="text-danger" *ngIf="formSignin.controls['password'].hasError('required')">
+                    Password is Required!
+                  </label>
+                </div>                
+              </div>
+            </div>
+            <div class="row" *ngIf="isError">
+              <div class="col mb-2">
+                  <label class="text-danger" >
+                  {{error}}
+                  </label>
+              </div>
+          </div>
+            <div class="row">
+              <div class="col d-grid">
+                <button type="button" (click)="signIn()" class="btn btn-sm btn-success" 
+                  [disabled]="formSignin.pristine || formSignin.invalid">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+                  Sign in
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-grid">
+                <button mat-button routerLink="/forgot" >
+                  <span> Forgot Password</span>
+                </button>
+              </div>
+            </div>            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,10 +1,10 @@
 export interface Song {
-  id: String;
-  isFavorite: boolean;
-  songName: String;  
-  artistName: String;  
-  genre: String;
-  length: String;  
+  id: String;  
+  songName: String;
+  artistName: String;
+  category: string;
+  album: String;
   photo: String;
   url: String;
+  isFavorite: boolean;
 }

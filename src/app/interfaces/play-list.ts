@@ -4,4 +4,5 @@ export interface PlayList {
   userName: String;
   displayName: String;
   isFavorite: boolean;
+  isLivesync: boolean;
 }

@@ -1,0 +1,16 @@
+<div class="list-sample">
+    <igx-list>
+        <igx-list-item [isHeader]="true">Notification</igx-list-item>
+        <div *ngFor="let us of notificationList | igxFilter: filterContacts">
+            <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" 
+              #item  (click)="viewNotification(us)" [style.color]="us.isViewed ? 'black' : 'blue'">
+                <igx-avatar igxListThumbnail [roundShape]="true" >
+                    <mat-icon *ngIf="!us.isViewed">mark_email_unread</mat-icon>
+                    <mat-icon *ngIf="us.isViewed">mark_email_read</mat-icon>
+                </igx-avatar>
+                <span igxListLineTitle>{{ us.sender }}</span>
+                <span igxListLineSubTitle>{{ us.subject }} for {{us.message}}</span>
+            </igx-list-item>
+        </div>        
+    </igx-list>
+</div>

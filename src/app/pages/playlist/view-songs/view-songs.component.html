@@ -1,0 +1,11 @@
+<div class="list-sample">
+    <igx-list [displayDensity]="$any('density')">
+        <igx-list-item [isHeader]="true">Songs - {{playlistName}}</igx-list-item>
+        <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" #item *ngFor="let song of playlistSongs | igxFilter: filterContacts;">
+            <igx-avatar igxListThumbnail [src]="song.photo" [roundShape]="true" ></igx-avatar>
+            <span igxListLineTitle>{{ song.songName }}</span>
+            <span igxListLineSubTitle>{{ song.artistName }}</span>
+            <igx-icon igxListAction [style.color]="song.isFavorite ? 'orange' : 'lightgray'" (click)="toggleFavorite(song)">favorite</igx-icon>
+        </igx-list-item>
+    </igx-list>
+</div>

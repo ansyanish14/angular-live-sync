@@ -8,4 +8,5 @@ export interface StreamState {
     error: boolean;
     volumeRange: number | undefined;
     currentRange: number | undefined;
+    isEnded: boolean;
 }

@@ -1,0 +1,11 @@
+<h6 mat-dialog-title>Select Playlist</h6>
+<ng-container *ngFor="let path of data">
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="path.playlistId" >
+            {{path.playlistName}}
+        </button>
+    </div>
+</ng-container>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" class="playlist-btn btn btn-sm btn-success">Cancel</button>
+</div>
